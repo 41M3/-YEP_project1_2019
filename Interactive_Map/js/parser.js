@@ -1,29 +1,47 @@
-const Filepath = require('./filepath');
-const Papa = require('papaparse');
-const csv = require('csv-parse');
-const fs = require('fs');
+/*const L = window.L;
+var map = L.map( 'map', {
+    center: [20.0, 5.0],
+    minZoom: 2,
+    maxZoom: 8,
+    zoom: 2
+})*/
 
-const parsedData = [];
-const csvFilePath = Filepath.getfilepath();
-const file = fs.createReadStream(csvFilePath);
-//const file = '../data/04-16-2020.csv'
+//const map = require('./map');
+//const OpenStreetMap_Map = require('./map');
+//const Filepath = require('./filepath');
+const Papa = ('papaparse');
+//const csv = require('csv-parse');
 
-function parsing() {
-    Papa.parse(file, {
-        header: true,
-        transformHeader: header => header.trim(),
-        step: function (result) {
-            parsedData.push(result.data)
-        },
-        complete: function (results, file) {
-            console.log('Complete', parsedData.length, 'records.');
-            console.log(parsedData[3041].Country_Region);
-            console.log(parsedData)
-            console.log(parseFloat(parsedData[100].Confirmed) + parseFloat(parsedData[200].Confirmed))
-            drawCircle(parsedData);
-        }
-    });
+//var parsedData = [];
+//const csvFilePath = Filepath.getfilepath();
+//const file = '../data/04-16-2020.csv';
+
+/*
+function drawCircle(Data) {
+
+    for (var i = 0; i < Data.length; ++i ) {
+        console.log(Data[i].Combined_Key);
+        L.circle([parseFloat(Data[i].Lat), parseFloat(Data[i].long_)], {radius: parseFloat(Data[i].Confirmed), color: "#FF0000", weight: 2})
+            .bindPopup(Data[i].Combined_Key + "last update" + Data[i].Last_Update)
+            .addTo(map);
+    }
 }
+*/
+
+function parsing(file) {
+    return new Promise(function(complete, error) {
+        Papa.parse(file, {
+            header: true,
+            complete, error });
+    });
+};
+
+/*parsing(fs.createReadStream(file))
+    .then(function(result) {
+        console.log(result.data);
+        console.log(result.data[3041].Country_Region);
+        //drawCircle(result.data);
+    });*/
 
 /*
     [0]'FIPS',           [1]'Admin2',
@@ -34,19 +52,7 @@ function parsing() {
     [10]'Active',        [11]'Combined_Key'
 */
 
-function drawCircle(Data) {
-    for (var i = 0; i < Data.length; ++i ) {
-        console.log(Data[i].Combined_Key);
-        L.circle([Data[i].Lat, Data[i].long_], {radius: Data[i].Confirmed, color: "#FF0000", weight: 2})
-            .bindPopup(Data[i].Combined_Key + "last update" + Data[i].Last_Update)
-            .addTo(map);
-    }
-}
-
-
-console.log("[parser] " + parsing())
-
-module.exports = {parsing};
+exports = {parsing};
 
 /*['FIPS','Admin2','Province_State','Country_Region','Last_Update','Lat','Long_','Confirmed','Deaths','Recovered','Active','Combined_Key']*/
 /*['Province_State','Country_Region','Last_Update','Lat','Long_','Confirmed','Deaths','Recovered','Active','Combined_Key']*/

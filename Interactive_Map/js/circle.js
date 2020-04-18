@@ -1,12 +1,21 @@
 /*
-function drawCircle() {
+const L = window.L;
+var map = L.map( 'map', {
+    center: [20.0, 5.0],
+    minZoom: 2,
+    maxZoom: 8,
+    zoom: 2
+})
+
+function adrawCircle() {
     for (var i = 0; i < dbdd.length; ++i) {
         L.circle([dbdd[i].lat, dbdd[i].lng], {radius: dbdd[i].nbr, color: "#FF0000", weight: 2})
             .bindPopup("Pays " + '<a href="' + dbdd[i].url + '" target="_blank">' + dbdd[i].name + '</a>', {Width: "auto"})
             .addTo(map);
     }
-}
+}*/
 
+/*
 console.log("[circle] " + drawCircle())
 
 module.exports = {drawCircle};

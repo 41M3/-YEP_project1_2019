@@ -39,6 +39,6 @@ var dbdd = [
         "url": "https://en.wikipedia.org/wiki/France",
         "lat": 46.227638,
         "lng": 2.213749,
-        "nbr": 134582
+        "nbr": 595829
     }
 ];

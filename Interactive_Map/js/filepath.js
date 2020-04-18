@@ -31,4 +31,4 @@ function getfilepath() {
 
 console.log("[filepath.js] " + getfilepath());
 
-module.exports = {getfilepath};
+//exports = {getfilepath};
