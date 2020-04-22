@@ -5,11 +5,13 @@
 *   Aimé Motti <aime.motti@epitech.eu>
 */
 
-    function initialize() {
+function interactiveMap() {
     var confirmedCircle = L.layerGroup();
     var deathsCircle = L.layerGroup();
     var recoveredCircle = L.layerGroup();
     var activeCircle = L.layerGroup();
+
+    document.write(dbdd[1].name);
 
     L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(confirmedCircle),
         L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(confirmedCircle),
@@ -24,7 +26,7 @@
         L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.').addTo(recoveredCircle),
         L.marker([39.60, -104.8]).bindPopup('This is Aurora, CO.').addTo(recoveredCircle),
         L.marker([39.75, -105.23]).bindPopup('This is Golden, CO.').addTo(recoveredCircle)
-        L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(recoveredCircle);
+    L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(recoveredCircle);
 
     for (var i = 0; i < dbdd.length; ++i) {
         L.circle([dbdd[i].lat, dbdd[i].lng], {radius: dbdd[i].recovered, color: "#03224C", weight: 2})
@@ -36,8 +38,8 @@
             .addTo(deathsCircle);
 
         L.circle([dbdd[i].lat, dbdd[i].lng], {radius: dbdd[i].recovered, color: "#34C924", weight: 2})
-           .bindPopup("Pays " + '<a href="' + dbdd[i].url + '" target="_blank">' + dbdd[i].name + '</a>', {Width: "auto"})
-           .addTo(recoveredCircle);
+            .bindPopup("Pays " + '<a href="' + dbdd[i].url + '" target="_blank">' + dbdd[i].name + '</a>', {Width: "auto"})
+            .addTo(recoveredCircle);
 
         L.circle([dbdd[i].lat, dbdd[i].lng], {radius: dbdd[i].active, color: "#FFA500", weight: 2})
             .bindPopup("Pays " + '<a href="' + dbdd[i].url + '" target="_blank">' + dbdd[i].name + '</a>', {Width: "auto"})
@@ -78,3 +80,5 @@
 
     L.control.layers(baseLayers, cases).addTo(map);
 }
+
+interactiveMap();

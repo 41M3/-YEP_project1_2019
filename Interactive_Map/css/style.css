@@ -5,15 +5,15 @@
 *   Aimé Motti <aime.motti@epitech.eu>
 */
 
-html, body{
-	text-align: center;
-	height:100%;
-	margin: 0;
-	padding: 0;
+html, body {
+    text-align: center;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-#map{
-	height: 100%;
-	/*width: 1600px;*/
-	border: 1px solid #AAA;
+#map {
+    height: 100%;
+    /*width: 1600px;*/
+    border: 1px solid #AAA;
 }
