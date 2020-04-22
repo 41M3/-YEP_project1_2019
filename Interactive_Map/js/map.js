@@ -1,8 +1,42 @@
-const fs = ('file-system');
-const file = '../data/04-16-2020.csv';
 
 function initialize() {
-    var map = L.map('map').setView([10.0, 10.0], 2); // LIGNE 18
+    var confirmedCircle = L.layerGroup();
+    var deathsCircle = L.layerGroup();
+    var recoveredCircle = L.layerGroup();
+    var activeCircle = L.layerGroup();
+
+    L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(confirmedCircle),
+        L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(confirmedCircle),
+        L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.').addTo(confirmedCircle),
+        L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(confirmedCircle);
+
+    L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(deathsCircle),
+        L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(deathsCircle);
+
+    L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(recoveredCircle),
+        L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(recoveredCircle),
+        L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.').addTo(recoveredCircle),
+        L.marker([39.60, -104.8]).bindPopup('This is Aurora, CO.').addTo(recoveredCircle),
+        L.marker([39.75, -105.23]).bindPopup('This is Golden, CO.').addTo(recoveredCircle)
+        L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(recoveredCircle);
+
+    for (var i = 0; i < dbdd.length; ++i) {
+        L.circle([dbdd[i].lat, dbdd[i].lng], {radius: dbdd[i].recovered, color: "#03224C", weight: 2})
+            .bindPopup("Pays " + '<a href="' + dbdd[i].url + '" target="_blank">' + dbdd[i].name + '</a>', {Width: "auto"})
+            .addTo(confirmedCircle);
+
+        L.circle([dbdd[i].lat, dbdd[i].lng], {radius: dbdd[i].recovered, color: "#FF0000", weight: 2})
+            .bindPopup("Pays " + '<a href="' + dbdd[i].url + '" target="_blank">' + dbdd[i].name + '</a>', {Width: "auto"})
+            .addTo(deathsCircle);
+
+        L.circle([dbdd[i].lat, dbdd[i].lng], {radius: dbdd[i].recovered, color: "#34C924", weight: 2})
+           .bindPopup("Pays " + '<a href="' + dbdd[i].url + '" target="_blank">' + dbdd[i].name + '</a>', {Width: "auto"})
+           .addTo(recoveredCircle);
+
+        L.circle([dbdd[i].lat, dbdd[i].lng], {radius: dbdd[i].active, color: "#FFA500", weight: 2})
+            .bindPopup("Pays " + '<a href="' + dbdd[i].url + '" target="_blank">' + dbdd[i].name + '</a>', {Width: "auto"})
+            .addTo(activeCircle);
+    }
 
     var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
@@ -10,34 +44,31 @@ function initialize() {
         minZoom: 2
     });
 
-    const ggRoadmap = new L.Google('ROADMAP');
-    const ggSatellite = new L.Google('');
-    const ggTerrain = new L.Google('TERRAIN');
-    const ggHybrid = new L.Google('HYBRID');
+    var ggRoadmap = new L.Google('ROADMAP');
+    var ggSatellite = new L.Google('');
+    var ggTerrain = new L.Google('TERRAIN');
+    var ggHybrid = new L.Google('HYBRID');
 
-    map.addLayer(ggRoadmap);
-    map.addControl(new L.Control.Layers({
-            //'OpenStreetMap': osmLayer,
-            'Google Roadmap': ggRoadmap,
-            'Google Satellite': ggSatellite,
-            //'Google Terrain': ggTerrain,
-            'Google Hybrid': ggHybrid
-        }, {})
-    );
 
-    for (var i = 0; i < dbdd.length; ++i) {
+    var map = L.map('map', {
+        center: [10.0, 10.0], //[39.73, -104.99],
+        zoom: 2, //10,
+        layers: [osmLayer, confirmedCircle]
+    });
 
-        L.circle([dbdd[i].lat, dbdd[i].lng], {radius: dbdd[i].nbr, color: "#FF0000", weight: 2})
-            .bindPopup("Pays " + '<a href="' + dbdd[i].url + '" target="_blank">' + dbdd[i].name + '</a>', {Width: "auto"})
-            .addTo(map);
-    }
+    var baseLayers = {
+        'OpenStreetMap': osmLayer,
+        'Google Roadmap': ggRoadmap,
+        'Google Satellite': ggSatellite,
+        'Google Hybrid': ggHybrid,
+    };
 
-    parsing(fs.createReadStream(file)) // getfilepath()))
-        .then(function (result) {
-            L.marker([48.5, 2]).addTo(map)
-                .bindTooltip("Les Granges-le-Roi", {permanent: true, direction: 'top'});
-             console.log(result.data);
-            //console.log(result.data[3041].Country_Region);
-            drawCircle();
-        });
+    var overlays = {
+        "Confirmed": confirmedCircle,
+        "Deaths": deathsCircle,
+        "Recovered": recoveredCircle,
+        "Active": activeCircle
+    };
+
+    L.control.layers(baseLayers, overlays).addTo(map);
 }

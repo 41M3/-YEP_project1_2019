@@ -6,12 +6,12 @@ var map = L.map( 'map', {
     zoom: 2
 })*/
 
+//const Filepath = require('./filepath');
+
+
 //const map = require('./map');
 //const OpenStreetMap_Map = require('./map');
-//const Filepath = require('./filepath');
-const Papa = ('papaparse');
 //const csv = require('csv-parse');
-
 //var parsedData = [];
 //const csvFilePath = Filepath.getfilepath();
 //const file = '../data/04-16-2020.csv';
@@ -27,6 +27,8 @@ function drawCircle(Data) {
     }
 }
 */
+
+const Papa = ('papaparse');
 
 function parsing(file) {
     return new Promise(function(complete, error) {

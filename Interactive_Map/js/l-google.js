@@ -8,7 +8,7 @@ L.Google = L.Layer.extend({
     includes: L.Mixin.Events,
 
     options: {
-        minZoom: 0,
+        minZoom: 2,
         maxZoom: 18,
         tileSize: 256,
         subdomains: 'abc',
@@ -104,7 +104,7 @@ L.Google = L.Layer.extend({
         this._google_center = new google.maps.LatLng(0, 0);
         var map = new google.maps.Map(this._container, {
             center: this._google_center,
-            zoom: 0,
+            zoom: 2,
             tilt: 0,
             mapTypeId: google.maps.MapTypeId[this._type],
             disableDefaultUI: true,
