@@ -1,5 +1,11 @@
+/*
+*   EPITECH PROJECT, 2019
+*   Interactive Map
+*   File author:
+*   Aimé Motti <aime.motti@epitech.eu>
+*/
 
-function initialize() {
+    function initialize() {
     var confirmedCircle = L.layerGroup();
     var deathsCircle = L.layerGroup();
     var recoveredCircle = L.layerGroup();
@@ -63,12 +69,12 @@ function initialize() {
         'Google Hybrid': ggHybrid,
     };
 
-    var overlays = {
+    var cases = {
         "Confirmed": confirmedCircle,
         "Deaths": deathsCircle,
         "Recovered": recoveredCircle,
         "Active": activeCircle
     };
 
-    L.control.layers(baseLayers, overlays).addTo(map);
+    L.control.layers(baseLayers, cases).addTo(map);
 }

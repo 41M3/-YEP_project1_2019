@@ -1,3 +1,11 @@
+/*
+*   EPITECH PROJECT, 2019
+*   First try parser
+*   File author:
+*   Aimé Motti <aime.motti@epitech.eu>
+*/
+
+
 /*const L = window.L;
 var map = L.map( 'map', {
     center: [20.0, 5.0],

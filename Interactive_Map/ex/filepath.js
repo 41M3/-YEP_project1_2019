@@ -1,3 +1,10 @@
+/*
+*   EPITECH PROJECT, 2019
+*   Get filepath
+*   File author:
+*   Aimé Motti <aime.motti@epitech.eu>
+*/
+
 const today = new Date();
 var d = today.getDate();
 var m = today.getMonth();

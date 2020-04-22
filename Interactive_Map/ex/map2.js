@@ -1,3 +1,10 @@
+/*
+*   EPITECH PROJECT, 2019
+*   Interactive Map #2
+*   File author:
+*   Aimé Motti <aime.motti@epitech.eu>
+*/
+
 const fs = ('file-system');
 const file = '../data/04-16-2020.csv';
 

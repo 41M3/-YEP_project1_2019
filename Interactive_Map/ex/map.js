@@ -1,3 +1,12 @@
+/*
+*   EPITECH PROJECT, 2019
+*   Interactive Map #1
+*   File author:
+*   Aimé Motti <aime.motti@epitech.eu>
+*/
+
+
+
 const L = window.L;
 
 function initialize() {

@@ -1,3 +1,11 @@
+/*
+*   EPITECH PROJECT, 2019
+*   bdd test
+*   File author:
+*   Aimé Motti <aime.motti@epitech.eu>
+*/
+
+
 var dbdd = [
     {
         "name": "Canada",
