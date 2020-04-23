@@ -98,7 +98,7 @@ function getFileName() {
   let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
   let year = date_ob.getFullYear();
 
-  date = date - 2; //parce que le github a 2 jours de retard
+  date = date - 1; //parce que le github a 2 jours de retard
   fileName = month + "-" + date + "-" + year + ".csv";
   return (fileName)
 };
