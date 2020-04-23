@@ -13,7 +13,7 @@ function interactiveMap(csv_data) {
 
     //document.write(dbdd[1].name);
 
-    var data = csv_data.records
+    var data = csv_data.records;
 
     const idx = {
         lat: csv_data.fields.indexOf('Lat'),
@@ -32,19 +32,35 @@ function interactiveMap(csv_data) {
         let china = row[idx.name].match("China") ? 10 : 2;
 
         if (row[idx.lat] != null && row[idx.long] != null) {
-            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {radius: china * row[idx.confirmed], color: "#03224C", weight: 2})
+            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {
+                radius: china * row[idx.confirmed],
+                color: "#03224C",
+                weight: 2
+            })
                 .bindPopup("Location: " + row[idx.name] + ", " + row[idx.confirmed] + " confirmed cases" + "</br>" + "Last update: " + row[idx.update], {Width: "auto"})
                 .addTo(confirmedCircle);
 
-            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {radius: 10 * row[idx.deaths], color: "#FF0000", weight: 2})
+            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {
+                radius: 10 * row[idx.deaths],
+                color: "#FF0000",
+                weight: 2
+            })
                 .bindPopup("Location: " + row[idx.name] + ", " + row[idx.deaths] + " deaths cases" + "</br>" + "Last update: " + row[idx.update], {Width: "auto"})
                 .addTo(deathsCircle);
 
-            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {radius: china * row[idx.recovered], color: "#34C924", weight: 2})
+            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {
+                radius: china * row[idx.recovered],
+                color: "#34C924",
+                weight: 2
+            })
                 .bindPopup("Location: " + row[idx.name] + ", " + row[idx.recovered] + " recovered cases" + "</br>" + "Last update: " + row[idx.update], {Width: "auto"})
                 .addTo(recoveredCircle);
 
-            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {radius: china * row[idx.active], color: "#FFA500", weight: 2})
+            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {
+                radius: china * row[idx.active],
+                color: "#FFA500",
+                weight: 2
+            })
                 .bindPopup("Location: " + row[idx.name] + ", " + row[idx.active] + " active cases" + "</br>" + "Last update: " + row[idx.update], {Width: "auto"})
                 .addTo(activeCircle);
         }
@@ -91,26 +107,31 @@ function interactiveMap(csv_data) {
 */
 
 function getFileName() {
-  var fileName;
-  let date_ob = new Date();
+    var fileName;
+    let date_ob = new Date();
 
-  let date = ("0" + date_ob.getDate()).slice(-2);
-  let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-  let year = date_ob.getFullYear();
+    let date = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let year = date_ob.getFullYear();
+    let hour = date_ob.getHours();
 
-  date = date - 1; //parce que le github a 2 jours de retard
-  fileName = month + "-" + date + "-" + year + ".csv";
-  return (fileName)
-};
+    if (hour > 2)
+        date = date - 1;
+    else
+        date = date - 2;
+
+    fileName = month + "-" + date + "-" + year + ".csv";
+    return (fileName);
+}
 
 
 function parseData(data) {
-    CSV.fetch({data: data}).done(function(parsed) {
+    CSV.fetch({data: data}).done(function (parsed) {
         interactiveMap(parsed);
     })
 }
 
-$.get("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/" + getFileName(), function(data) {
+$.get("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/" + getFileName(), function (data) {
     parseData(data)
 })
 
