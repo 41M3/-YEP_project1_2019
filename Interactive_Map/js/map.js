@@ -11,7 +11,8 @@ function interactiveMap() {
     var recoveredCircle = L.layerGroup();
     var activeCircle = L.layerGroup();
 
-    document.write(dbdd[1].name);
+    document.write(dbdd[1].name + "</br>");
+    document.write("TEST");
 
     L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(confirmedCircle),
         L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(confirmedCircle),
