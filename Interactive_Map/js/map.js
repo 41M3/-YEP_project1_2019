@@ -1,7 +1,7 @@
 /*
 *   EPITECH PROJECT, 2019
 *   Interactive Map
-*   File author:
+*   author:
 *   Aimé Motti <aime.motti@epitech.eu>
 */
 
@@ -13,21 +13,6 @@ function interactiveMap(csv_data) {
 
     //document.write(dbdd[1].name);
 
-    L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(confirmedCircle),
-        L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(confirmedCircle),
-        L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.').addTo(confirmedCircle),
-        L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(confirmedCircle);
-
-    L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(deathsCircle),
-        L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(deathsCircle);
-
-    L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.').addTo(recoveredCircle),
-        L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.').addTo(recoveredCircle),
-        L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.').addTo(recoveredCircle),
-        L.marker([39.60, -104.8]).bindPopup('This is Aurora, CO.').addTo(recoveredCircle),
-        L.marker([39.75, -105.23]).bindPopup('This is Golden, CO.').addTo(recoveredCircle)
-    L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.').addTo(recoveredCircle);
-
     var data = csv_data.records
 
     const idx = {
@@ -38,28 +23,29 @@ function interactiveMap(csv_data) {
         active: csv_data.fields.indexOf('Active'),
         deaths: csv_data.fields.indexOf('Deaths'),
         confirmed: csv_data.fields.indexOf('Confirmed'),
+        update: csv_data.fields.indexOf('Last_Update'),
     };
 
     for (var i in data) {
         let row = data[i];
 
-        let clamerde = row[idx.name].match("China") ? 50 : 1.5
+        let china = row[idx.name].match("China") ? 10 : 2;
 
         if (row[idx.lat] != null && row[idx.long] != null) {
-            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {radius: clamerde * row[idx.confirmed], color: "#03224C", weight: 2})
-                .bindPopup("Pays " + row[idx.name] + ", y'en a " + row[idx.confirmed] + " t'approche pas frr", {Width: "auto"})
+            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {radius: china * row[idx.confirmed], color: "#03224C", weight: 2})
+                .bindPopup("Location: " + row[idx.name] + ", " + row[idx.confirmed] + " confirmed cases" + "</br>" + "Last update: " + row[idx.update], {Width: "auto"})
                 .addTo(confirmedCircle);
 
-            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {radius: clamerde * row[idx.deaths], color: "#FF0000", weight: 2})
-                .bindPopup("Pays " + row[idx.name] + ", y'en a " + row[idx.deaths] + " t'approche pas frr", {Width: "auto"})
+            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {radius: 10 * row[idx.deaths], color: "#FF0000", weight: 2})
+                .bindPopup("Location: " + row[idx.name] + ", " + row[idx.deaths] + " deaths cases" + "</br>" + "Last update: " + row[idx.update], {Width: "auto"})
                 .addTo(deathsCircle);
 
-            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {radius: clamerde * row[idx.recovered], color: "#34C924", weight: 2})
-                .bindPopup("Pays " + row[idx.name] + ", y'en a " + row[idx.recovered] + " t'approche pas frr", {Width: "auto"})
+            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {radius: china * row[idx.recovered], color: "#34C924", weight: 2})
+                .bindPopup("Location: " + row[idx.name] + ", " + row[idx.recovered] + " recovered cases" + "</br>" + "Last update: " + row[idx.update], {Width: "auto"})
                 .addTo(recoveredCircle);
 
-            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {radius: clamerde * row[idx.active], color: "#FFA500", weight: 2})
-                .bindPopup("Pays " + row[idx.name] + ", y'en a " + row[idx.active] + " t'approche pas frr", {Width: "auto"})
+            L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {radius: china * row[idx.active], color: "#FFA500", weight: 2})
+                .bindPopup("Location: " + row[idx.name] + ", " + row[idx.active] + " active cases" + "</br>" + "Last update: " + row[idx.update], {Width: "auto"})
                 .addTo(activeCircle);
         }
     }
@@ -72,13 +58,12 @@ function interactiveMap(csv_data) {
 
     var ggRoadmap = new L.Google('ROADMAP');
     var ggSatellite = new L.Google('');
-    var ggTerrain = new L.Google('TERRAIN');
     var ggHybrid = new L.Google('HYBRID');
 
 
     var map = L.map('map', {
-        center: [10.0, 10.0], //[39.73, -104.99],
-        zoom: 2, //10,
+        center: [10.0, 10.0],
+        zoom: 2,
         layers: [osmLayer, confirmedCircle]
     });
 
@@ -99,6 +84,11 @@ function interactiveMap(csv_data) {
     L.control.layers(baseLayers, cases).addTo(map);
 }
 
+/*
+*   Parsing
+*   author:
+*   Gaëtan CHAUGNY <gaetan.chaugny@epitech.eu>
+*/
 
 function getFileName() {
   var fileName;
