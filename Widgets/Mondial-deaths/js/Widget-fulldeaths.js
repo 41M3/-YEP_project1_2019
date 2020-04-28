@@ -24,8 +24,9 @@ function fulldeaths(csv_data) {
     for (var i in data) {
         total += parseInt(data[i][idx.deaths]);
     }
-
-    document.write("</br>" + "</br>" + format(total) + "</br>" + "</br>");
+    var lastup = document.getElementById("Mondialdeaths")
+    lastup.innerHTML = "</br>" + "</br>" + format(total) + "</br>" + "</br>";
+    //document.write("</br>" + "</br>" + format(total) + "</br>" + "</br>");
 }
 
 function regiondeaths(csv_data) {
@@ -33,12 +34,33 @@ function regiondeaths(csv_data) {
     var data = csv_data.records;
     let total = 0;
 
-    const idx = {
-        deaths: csv_data.fields.indexOf('Deaths'),
-    };
+    var billy = [];
 
+    const idx = {
+        //lat: csv_data.fields.indexOf('Lat'),
+        //long: csv_data.fields.indexOf('Long_'),
+        //recovered: csv_data.fields.indexOf('Recovered'),
+        region: csv_data.fields.indexOf('Country_Region'),
+        //name: csv_data.fields.indexOf('Combined_Key'),
+        //active: csv_data.fields.indexOf('Active'),
+        deaths: csv_data.fields.indexOf('Deaths'),
+        //confirmed: csv_data.fields.indexOf('Confirmed'),
+        //update: csv_data.fields.indexOf('Last_Update'),
+    };
     for (var i in data) {
+        row = data[i];
+        for (var j in billy) {
+            if (row[idx.region] === billy[j][1]) {
+                billy[j][2] += parseInt(row[idx.deaths])
+                i++;
+            }
+        }
+        billy.push([i, row[idx.region], parseInt(row[idx.deaths])]);
         total += parseInt(data[i][idx.deaths]);
+    }
+
+    for (var j in billy) {
+        document.write(billy[j][0] + " " + billy[j][1] + " " + billy[j][2] + "</br>");
     }
 
     document.write("</br>" + "</br>" + format(total) + "</br>" + "</br>");

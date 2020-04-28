@@ -12,7 +12,9 @@ function lastup(csv_data) {
     const idx = {
         update: csv_data.fields.indexOf('Last_Update'),
     };
-    document.write(data[3][idx.update]);
+    var lastup = document.getElementById("Lastup")
+    lastup.innerHTML = data[3][idx.update];
+    //document.write("<div>" + data[3][idx.update] +  "</div>");
 }
 
 /*
