@@ -55,10 +55,13 @@ function fulldeaths(csv_data, date) {
     for (var i in data) {
         total += parseInt(data[i][idx.deaths]);
     }
-    //document.write("in fulldeath : " + total);
-    //document.write("</br>");
     all_deaths.push(total);
-    //date_deaths.push(date)
+}
+
+function yep(data, date) {
+    CSV.fetch({data: data}).done(function (parsed) {
+        fulldeaths(parsed, date);
+    })
 }
 
 var allFiles = ["04-03-2020", "04-04-2020", "04-05-2020", "04-06-2020", "04-07-2020", "04-08-2020", "04-09-2020", "04-10-2020", "04-11-2020", "04-12-2020", "04-13-2020", "04-14-2020", "04-15-2020", "04-16-2020", "04-17-2020", "04-18-2020", "04-19-2020", "04-20-2020", "04-21-2020", "04-22-2020", "04-23-2020", "04-24-2020", "04-25-2020", "04-26-2020", "04-27-2020"];
@@ -66,10 +69,8 @@ var allFiles = ["04-03-2020", "04-04-2020", "04-05-2020", "04-06-2020", "04-07-2
 async function getData() {
     for (var item of allFiles) {
         await $.get("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/" + item + ".csv", function (data) {
-            parseData(data, item)
+            yep(data)
         })
     }
-graphic();
+    graphic();
 }
-
-getData();
