@@ -59,7 +59,7 @@
                         </div>
                     </td>
                     <td class="cell size15" rowspan="2">
-                        <div class="widget scroll">
+                        <div class="widget scroll" style="min-height: 500px;">
                             <div class="center">Total Deaths</div>
                             <div id="deathsTotal" class="deadT"></div>
                             <div id="deathsList" style="padding-left: 15px;"></div>
@@ -84,7 +84,7 @@
                 <tr>
                     <td class="cell" colspan="2">
                         <div class="widget">
-                            Graph
+                            <canvas id="graphWidget"></canvas>
                         </div>
                     </td>
                 </tr>
@@ -101,3 +101,5 @@
 <script type="text/javascript" src="js/Widget-confirmed.js"></script>
 <script type="text/javascript" src="../Mondial-deaths/js/Widget-fulldeaths.js"></script>
 <script type="text/javascript" src="js/Widget-recovered.js"></script>
+<script type="text/javascript" src="js/Widget-graph.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>

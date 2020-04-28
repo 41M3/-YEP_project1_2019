@@ -132,6 +132,7 @@ function parseData(data) {
         deathscases(parsed);
         confirmedcases(parsed);
         recovered(parsed);
+        fulldeaths(parsed, date);
     })
 }
 
