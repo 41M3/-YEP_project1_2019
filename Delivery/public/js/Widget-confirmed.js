@@ -39,9 +39,7 @@ function confirmedcases(csv_data) {
         for (var i in data) {
             let row = data[i];
             if (checkCountry(data[i][idx.country], tabName) === true && (tmp === -1 || row[idx.confirmed] > data[tmp][idx.confirmed])) {
-                console.log(tmp)
                 tmp = i;
-                console.log(tmp)
             }
         }
         if (tmp !== -1) {
@@ -72,7 +70,3 @@ function confirmedcases(csv_data) {
 
     }
 }
-
-        confirmedcases(parsed);
-
-

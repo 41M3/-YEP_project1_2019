@@ -11,8 +11,6 @@ function interactiveMap(csv_data) {
     var recoveredCircle = L.layerGroup();
     var activeCircle = L.layerGroup();
 
-    //document.write(dbdd[1].name);
-
     var data = csv_data.records;
 
     const idx = {
@@ -34,7 +32,7 @@ function interactiveMap(csv_data) {
         if (row[idx.lat] != null && row[idx.long] != null) {
             L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {
                 radius: china * row[idx.confirmed],
-                color: "#03224C",
+                color: "#FF0000",
                 weight: 2
             })
                 .bindPopup("Location: " + row[idx.name] + ", " + row[idx.confirmed] + " confirmed cases" + "</br>" + "Last update: " + row[idx.update], {Width: "auto"})
@@ -42,7 +40,7 @@ function interactiveMap(csv_data) {
 
             L.circle([parseFloat(row[idx.lat]), parseFloat(row[idx.long])], {
                 radius: 10 * row[idx.deaths],
-                color: "#FF0000",
+                color: "#FFFFFF",
                 weight: 2
             })
                 .bindPopup("Location: " + row[idx.name] + ", " + row[idx.deaths] + " deaths cases" + "</br>" + "Last update: " + row[idx.update], {Width: "auto"})
@@ -80,7 +78,7 @@ function interactiveMap(csv_data) {
     var map = L.map('map', {
         center: [10.0, 10.0],
         zoom: 2,
-        layers: [osmLayer, confirmedCircle]
+        layers: [ggHybrid, confirmedCircle]
     });
 
     var baseLayers = {

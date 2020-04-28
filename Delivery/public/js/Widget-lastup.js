@@ -14,5 +14,4 @@ function lastup(csv_data) {
     };
     var lastup = document.getElementById("Lastup")
     lastup.innerHTML = data[3][idx.update];
-    //document.write("<div>" + data[3][idx.update] +  "</div>");
 }

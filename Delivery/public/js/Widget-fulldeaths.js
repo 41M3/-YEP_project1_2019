@@ -34,9 +34,7 @@ function deathscases(csv_data) {
         for (var i in data) {
             let row = data[i];
             if (checkCountry(data[i][idx.country], tabName) === true && (tmp === -1 || row[idx.deaths] > data[tmp][idx.deaths])) {
-                console.log(tmp)
                 tmp = i;
-                console.log(tmp)
             }
         }
         if (tmp !== -1) {
@@ -68,7 +66,3 @@ function deathscases(csv_data) {
     }
 
 }
-
-        deathscases(parsed);
-
-

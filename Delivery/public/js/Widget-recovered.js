@@ -39,9 +39,7 @@ function recovered(csv_data) {
         for (var i in data) {
             let row = data[i];
             if (checkCountry(data[i][idx.country], tabName) === true && (tmp === -1 || row[idx.recovered] > data[tmp][idx.recovered])) {
-                console.log(tmp)
                 tmp = i;
-                console.log(tmp)
             }
         }
         if (tmp !== -1) {
@@ -73,5 +71,3 @@ function recovered(csv_data) {
     }
         
 }
-
-        recovered(parsed);
