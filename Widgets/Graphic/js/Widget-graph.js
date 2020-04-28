@@ -10,8 +10,7 @@ var all_deaths = [];
 
 
 function graphic() {
-
-    var ctx = document.getElementById('graphWidget').getContext('2d');
+    /*var ctx = document.getElementById('graphWidget').getContext('2d');
     var chart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -23,9 +22,9 @@ function graphic() {
                 data: [58787, 64606, 69374, 74565],
             }]
         },
-
         options: {}
-    });
+    });*/
+
 }
 
 function getFileName() {
@@ -58,8 +57,8 @@ function fulldeaths(csv_data, date) {
     for (var i in data) {
         total += parseInt(data[i][idx.deaths]);
     }
-    //document.write("in fulldeath : " + total);
-    //document.write("</br>");
+    document.write("in fulldeath : " + total);
+    document.write("</br>");
     all_deaths.push(total);
     //date_deaths.push(date)
 }
