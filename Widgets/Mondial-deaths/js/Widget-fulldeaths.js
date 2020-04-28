@@ -12,93 +12,56 @@ function format(nb) {
     return(nb);
 }
 
-function fulldeaths(csv_data) {
+function deathscases(csv_data) {
 
     var data = csv_data.records;
-    let total = 0;
+    var total = 0;
+    var tabName = [];
+    var tabValue = [];
+    var tmp = -1;
+    var len = data.length;
 
     const idx = {
         deaths: csv_data.fields.indexOf('Deaths'),
+        country: csv_data.fields.indexOf('Country_Region'),
     };
 
     for (var i in data) {
-        total += parseInt(data[i][idx.deaths]);
+        let row = data[i];
+        total += row[idx.deaths];
     }
-    var lastup = document.getElementById("Mondialdeaths")
-    lastup.innerHTML = "</br>" + "</br>" + format(total) + "</br>" + "</br>";
-    //document.write("</br>" + "</br>" + format(total) + "</br>" + "</br>");
-}
-
-function regiondeaths(csv_data) {
-
-    var data = csv_data.records;
-    let total = 0;
-
-    var billy = [];
-
-    const idx = {
-        //lat: csv_data.fields.indexOf('Lat'),
-        //long: csv_data.fields.indexOf('Long_'),
-        //recovered: csv_data.fields.indexOf('Recovered'),
-        region: csv_data.fields.indexOf('Country_Region'),
-        //name: csv_data.fields.indexOf('Combined_Key'),
-        //active: csv_data.fields.indexOf('Active'),
-        deaths: csv_data.fields.indexOf('Deaths'),
-        //confirmed: csv_data.fields.indexOf('Confirmed'),
-        //update: csv_data.fields.indexOf('Last_Update'),
-    };
-    for (var i in data) {
-        row = data[i];
-        for (var j in billy) {
-            if (row[idx.region] === billy[j][1]) {
-                billy[j][2] += parseInt(row[idx.deaths])
-                i++;
+    while (tabValue.length < len) {
+        for (var i in data) {
+            let row = data[i];
+            if (checkCountry(data[i][idx.country], tabName) === true && (tmp === -1 || row[idx.deaths] > data[tmp][idx.deaths])) {
+                console.log(tmp)
+                tmp = i;
+                console.log(tmp)
             }
         }
-        billy.push([i, row[idx.region], parseInt(row[idx.deaths])]);
-        total += parseInt(data[i][idx.deaths]);
+        if (tmp !== -1) {
+            tabName.push(data[tmp][idx.country]);
+            tabValue.push(data[tmp][idx.deaths]);
+            tmp = -1
+        } else {
+            break;
+        }
     }
 
-    for (var j in billy) {
-        document.write(billy[j][0] + " " + billy[j][1] + " " + billy[j][2] + "</br>");
+    var totalID = document.getElementById("deathsTotal");
+    totalID.appendChild(document.createTextNode(format(total)));
+
+    var listID = document.getElementById("deathsList");
+
+    for (var i in tabValue) {
+        if (i !== 0) {
+            listID.appendChild(document.createElement("br"));
+        }
+        listID.appendChild(document.createTextNode(tabName[i] + " " + format(tabValue[i])));
     }
 
-    document.write("</br>" + "</br>" + format(total) + "</br>" + "</br>");
 }
 
-/*
-*   Parsing
-*   author:
-*   Gaëtan CHAUGNY <gaetan.chaugny@epitech.eu>
-*/
+        deathscases(parsed);
 
-function getFileName() {
-    var fileName;
-    let date_ob = new Date();
-
-    let date = ("0" + date_ob.getDate()).slice(-2);
-    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-    let year = date_ob.getFullYear();
-    let hour = date_ob.getHours();
-
-    if (hour > 2)
-        date = date - 1;
-    else
-        date = date - 2;
-
-    fileName = month + "-" + date + "-" + year + ".csv";
-    return (fileName);
-}
-
-
-function parseData(data) {
-    CSV.fetch({data: data}).done(function (parsed) {
-        fulldeaths(parsed);
-        regiondeaths(parsed);
-    })
-}
-
-$.get("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/" + getFileName(), function (data) {
-    parseData(data)
-})
 
