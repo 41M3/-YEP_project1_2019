@@ -53,9 +53,16 @@ function lastup(csv_data) {
         }
     }
 
-    document.write(total);
+    var totalID = document.getElementById("confirmedTotal");
+    totalID.appendChild(document.createTextNode(total));
+    
+    var listID = document.getElementById("confirmedList");
+
     for (var i in tabValue) {
-        document.write("</br>" + tabName[i] + " " + tabValue[i]);
+        if (i != 0) {
+            listID.appendChild(document.createElement("br"));
+        }
+        listID.appendChild(document.createTextNode(tabName[i] + " " + tabValue[i]));
     }
         
 }
