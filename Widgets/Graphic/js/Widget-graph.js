@@ -6,20 +6,18 @@
 */
 
 var all_deaths = [];
-//var date_deaths = [];
-
 
 function graphic() {
     var ctx = document.getElementById('graphWidget').getContext('2d');
     var chart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ["04-03-2020", "04-04-2020", "04-05-2020", "04-06-2020"],
+            labels: allFiles,
             datasets: [{
                 label: "Deaths per days",
-                backgroundColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgb(195, 30, 30)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [58787, 64606, 69374, 74565],
+                data: all_deaths,
             }]
         },
         options: {}
@@ -72,11 +70,13 @@ function parseData(data, date) {
 
 var allFiles = ["04-03-2020", "04-04-2020", "04-05-2020", "04-06-2020", "04-07-2020", "04-08-2020", "04-09-2020", "04-10-2020", "04-11-2020", "04-12-2020", "04-13-2020", "04-14-2020", "04-15-2020", "04-16-2020", "04-17-2020", "04-18-2020", "04-19-2020", "04-20-2020", "04-21-2020", "04-22-2020", "04-23-2020", "04-24-2020", "04-25-2020", "04-26-2020", "04-27-2020"];
 
-allFiles.forEach(function(item) {
-    $.get("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/" + item + ".csv", function (data) {    
-        parseData(data, item)
-    })
-    
-});
-
+async function getData() {
+    for (var item of allFiles) {
+        await $.get("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/" + item + ".csv", function (data) {
+            parseData(data, item)
+        })
+    }
 graphic();
+}
+
+getData();
