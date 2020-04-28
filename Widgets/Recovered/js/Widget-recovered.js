@@ -63,7 +63,7 @@ function recovered(csv_data) {
             listID.appendChild(document.createElement("br"));
         }
         ele = document.createElement("b");
-        ele.style.color = "red"
+        ele.style.color = "green"
         ele.appendChild(document.createTextNode(format(tabValue[i])));
         listID.appendChild(ele);
         listID.appendChild(document.createElement("br"));
