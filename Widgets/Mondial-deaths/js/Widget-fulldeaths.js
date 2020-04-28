@@ -57,7 +57,14 @@ function deathscases(csv_data) {
         if (i !== 0) {
             listID.appendChild(document.createElement("br"));
         }
-        listID.appendChild(document.createTextNode(tabName[i] + " " + format(tabValue[i])));
+        ele = document.createElement("b");
+        ele.style.color = "white"
+        ele.appendChild(document.createTextNode(format(tabValue[i])));
+        listID.appendChild(ele);
+        listID.appendChild(document.createElement("br"));
+        listID.appendChild(document.createTextNode(tabName[i]));
+        listID.appendChild(document.createElement("br"));
+
     }
 
 }
