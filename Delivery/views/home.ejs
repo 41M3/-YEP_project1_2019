@@ -22,9 +22,8 @@
             src="https://maps.google.com/maps/api/js?key=AIzaSyCTIn22N0OJ6j4PjvTkqi8ROqN_XhKZUyQ"></script>
     <script type="text/javascript" src="js/l-google.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../Interactive_Map/js/csv-parser.min.js"></script>
     <script type="text/javascript" src="js/csv-parser.min.js"></script>
-    <script type="text/javascript" src="js/map.js"></script>
-    <script type="text/javascript" src="js/Widget-lastup.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <title>Dashboard</title>
 </head>
@@ -42,15 +41,16 @@
                     </td>
                     <td class="cell">
                         <div class="widget center">
-                            Last update
+                            Last updated (YYYY/MM/DD)
                             <div id="Lastup"></div>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td class="cell size15">
+                    <td class="cell size15" style="height: 10%;">
                         <div class="widget">
-                            Total Confirmed
+                            <div class="center">Total Confirmed</div>
+                            <div id="confirmedTotal" class="confT"></div>
                         </div>
                     </td>
                     <td class="cell size55" rowspan="3">
@@ -58,21 +58,26 @@
                             <div id="map"></div>
                         </div>
                     </td>
-                    <td class="cell size15 scroll" rowspan="2">
-                        <div class="widget">
-                            Total Deaths
+                    <td class="cell size15" rowspan="2">
+                        <div class="widget scroll">
+                            <div class="center">Total Deaths</div>
+                            <div id="deathsTotal" class="deadT"></div>
+                            <div id="deathsList" style="padding-left: 15px;"></div>
                         </div>
                     </td>
-                    <td class="cell size15 scroll" rowspan="2">
-                        <div class="widget">
-                            Total Recovered
+                    <td class="cell size15" rowspan="2">
+                        <div class="widget scroll">
+                            <div class="center">Total Recovered</div>
+                            <div id="recoveredTotal" class="recoT"></div>
+                            <div id="recoveredList" style="padding-left: 15px;"></div>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td class="cell scroll" rowspan="2">
-                        <div class="widget">
-                            Confirmed Cases by Country/Region/Sovereignty
+                    <td class="cell" rowspan="2">
+                        <div class="widget scroll">
+                            <div class="center" style="padding: 0px 5px;">Confirmed Cases by Country/Region/Sovereignty</div>
+                            <div id="confirmedList" style="padding-left: 15px;"></div>
                         </div>
                     </td>
                 </tr>
@@ -88,3 +93,11 @@
 	</body>
 
 </html>
+
+<script type="text/javascript" src="../Confirmed/js/Widget-confirmed.js"></script>
+<script type="text/javascript" src="js/Widget-fulldeaths.js"></script>
+<script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript" src="js/Widget-lastup.js"></script>
+<script type="text/javascript" src="js/Widget-confirmed.js"></script>
+<script type="text/javascript" src="../Mondial-deaths/js/Widget-fulldeaths.js"></script>
+<script type="text/javascript" src="js/Widget-recovered.js"></script>

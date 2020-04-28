@@ -38,17 +38,18 @@ ul ul a {
 }
 
 .scroll {
-    overflow-x: hidden;
+    overflow-y: auto;
     overflow-x: auto;
 }
 
 .widget {
     background-color: rgb(45, 45, 45);
-    color: white;
+    color: rgb(155, 172, 158);
     border: solid;
     border-color: rgb(77, 93, 79);
     border-width: thin;
     height: 100%;
+    max-width: 100%;
 }
 
 .tittle {
@@ -66,6 +67,27 @@ ul ul a {
 
 .Lastup {
     font-weight: bolder;
+}
+
+.confT {
+    text-align: center;
+    color: red;
+    font-weight: bolder;
+    font-size: xx-large;
+}
+
+.deadT {
+    text-align: center;
+    color: white;
+    font-weight: bolder;
+    font-size: xx-large;
+}
+
+.recoT {
+    text-align: center;
+    color: green;
+    font-weight: bolder;
+    font-size: xx-large;
 }
 
 .size15  { width:  15%; }

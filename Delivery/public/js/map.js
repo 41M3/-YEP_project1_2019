@@ -129,6 +129,9 @@ function parseData(data) {
     CSV.fetch({data: data}).done(function (parsed) {
         interactiveMap(parsed);
         lastup(parsed);
+        deathscases(parsed);
+        confirmedcases(parsed);
+        recovered(parsed);
     })
 }
 
