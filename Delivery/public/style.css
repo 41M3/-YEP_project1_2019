@@ -27,13 +27,45 @@ ul ul a {
 .layout {
     height: 100vh;
     width: 100%;
-    background: grey;
+    background: black;
     padding   : 0.5em;
 }
 
 .cell {
-    border: solid;
     overflow: hidden;
+    background-color: black;
+    padding: 5px;
+}
+
+.scroll {
+    overflow-x: hidden;
+    overflow-x: auto;
+}
+
+.widget {
+    background-color: rgb(45, 45, 45);
+    color: white;
+    border: solid;
+    border-color: rgb(77, 93, 79);
+    border-width: thin;
+    height: 100%;
+}
+
+.tittle {
+    font-size: xx-large;
+    padding-left: 10px;
+}
+
+.center {
+    text-align: center;
+}
+
+.pad5 {
+    padding: 5px;
+}
+
+.Lastup {
+    font-weight: bolder;
 }
 
 .size15  { width:  15%; }
