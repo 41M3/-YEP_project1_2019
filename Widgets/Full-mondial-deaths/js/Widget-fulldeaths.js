@@ -5,14 +5,43 @@
 *   Aimé Motti <aime.motti@epitech.eu>
 */
 
-function lastup(csv_data) {
+function format(nb) {
+    var tmp;
+    
+    while ((tmp=nb.toString().replace(/(\d)([\d]{3})(\.|\s|\b)/,"$1 $2$3")) && tmp!=nb) nb=tmp;
+    return(nb);
+}
+
+function fulldeaths(csv_data) {
 
     var data = csv_data.records;
+    let total = 0;
 
     const idx = {
-        update: csv_data.fields.indexOf('Last_Update'),
+        deaths: csv_data.fields.indexOf('Deaths'),
     };
-    document.write(data[3][idx.update]);
+
+    for (var i in data) {
+        total += parseInt(data[i][idx.deaths]);
+    }
+
+    document.write("</br>" + "</br>" + format(total) + "</br>" + "</br>");
+}
+
+function regiondeaths(csv_data) {
+
+    var data = csv_data.records;
+    let total = 0;
+
+    const idx = {
+        deaths: csv_data.fields.indexOf('Deaths'),
+    };
+
+    for (var i in data) {
+        total += parseInt(data[i][idx.deaths]);
+    }
+
+    document.write("</br>" + "</br>" + format(total) + "</br>" + "</br>");
 }
 
 /*
@@ -42,7 +71,8 @@ function getFileName() {
 
 function parseData(data) {
     CSV.fetch({data: data}).done(function (parsed) {
-        lastup(parsed);
+        fulldeaths(parsed);
+        regiondeaths(parsed);
     })
 }
 
