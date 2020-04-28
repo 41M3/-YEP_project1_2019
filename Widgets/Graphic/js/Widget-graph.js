@@ -2,24 +2,31 @@
 *   EPITECH PROJECT, 2019
 *   lastup
 *   author:
-*   Gatëtan CHAUGNY
+*   Gaëtan CHAUGNY
 */
 
-function lastup(csv_data) {
+var all_deaths = [];
+//var date_deaths = [];
 
-    var data = csv_data.records;
 
-    const idx = {
-        update: csv_data.fields.indexOf('Last_Update'),
-    };
-    document.write(data[3][idx.update]);
+function graphic() {
+
+    var ctx = document.getElementById('graphWidget').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["04-03-2020", "04-04-2020", "04-05-2020", "04-06-2020"],
+            datasets: [{
+                label: "Deaths per days",
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [58787, 64606, 69374, 74565],
+            }]
+        },
+
+        options: {}
+    });
 }
-
-/*
-*   Parsing
-*   author:
-*   Gaëtan CHAUGNY <gaetan.chaugny@epitech.eu>
-*/
 
 function getFileName() {
     var fileName;
@@ -39,14 +46,38 @@ function getFileName() {
     return (fileName);
 }
 
+function fulldeaths(csv_data, date) {
 
-function parseData(data) {
+    var data = csv_data.records;
+    let total = 0;
+
+    const idx = {
+        deaths: csv_data.fields.indexOf('Deaths'),
+    };
+
+    for (var i in data) {
+        total += parseInt(data[i][idx.deaths]);
+    }
+    //document.write("in fulldeath : " + total);
+    //document.write("</br>");
+    all_deaths.push(total);
+    //date_deaths.push(date)
+}
+
+
+function parseData(data, date) {
     CSV.fetch({data: data}).done(function (parsed) {
-        lastup(parsed);
+        fulldeaths(parsed, date);
     })
 }
 
-$.get("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/" + getFileName(), function (data) {
-    parseData(data)
-})
+var allFiles = ["04-03-2020", "04-04-2020", "04-05-2020", "04-06-2020", "04-07-2020", "04-08-2020", "04-09-2020", "04-10-2020", "04-11-2020", "04-12-2020", "04-13-2020", "04-14-2020", "04-15-2020", "04-16-2020", "04-17-2020", "04-18-2020"];
 
+allFiles.forEach(function(item) {
+    $.get("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/" + item + ".csv", function (data) {    
+        parseData(data, item)
+    })
+    
+});
+
+graphic();
