@@ -5,7 +5,10 @@
 *   Gaëtan CHAUGNY
 */
 
+var all_confirmed = [];
 var all_deaths = [];
+var all_resolved = [];
+var all_active = [];
 
 function graphic() {
     var ctx = document.getElementById('graphWidget').getContext('2d');
@@ -14,48 +17,52 @@ function graphic() {
         data: {
             labels: allFiles,
             datasets: [{
-                label: "Deaths per days",
-                backgroundColor: 'rgb(195, 30, 30)',
-                borderColor: 'rgb(255, 99, 132)',
+                label: "Confirmed cases",
+                borderColor: "#FF0000",
+                data: all_confirmed,
+            }, {
+                label: "Deaths cases",
+                borderColor: "#FFFFFF",
                 data: all_deaths,
+            }, {
+                label: "Resolved cases",
+                borderColor: "#34C924",
+                data: all_resolved,
+            }, {
+                label: "Active cases",
+                borderColor: "#FFA500",
+                data: all_active,
             }]
         },
         options: {}
     });
-
 }
 
-function getFileName() {
-    var fileName;
-    let date_ob = new Date();
-
-    let date = ("0" + date_ob.getDate()).slice(-2);
-    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-    let year = date_ob.getFullYear();
-    let hour = date_ob.getHours();
-
-    if (hour > 2)
-        date = date - 1;
-    else
-        date = date - 2;
-
-    fileName = month + "-" + date + "-" + year + ".csv";
-    return (fileName);
-}
-
-function fulldeaths(csv_data, date) {
+function fulldeaths(csv_data) {
 
     var data = csv_data.records;
-    let total = 0;
+    let total1 = 0;
+    let total2 = 0;
+    let total3 = 0;
+    let total4 = 0;
 
     const idx = {
+        recovered: csv_data.fields.indexOf('Recovered'),
+        active: csv_data.fields.indexOf('Active'),
+        confirmed: csv_data.fields.indexOf('Confirmed'),
         deaths: csv_data.fields.indexOf('Deaths'),
     };
 
     for (var i in data) {
-        total += parseInt(data[i][idx.deaths]);
+        total1 += parseInt(data[i][idx.deaths]);
+        total2 += parseInt(data[i][idx.active]);
+        total3 += parseInt(data[i][idx.recovered]);
+        total4 += parseInt(data[i][idx.confirmed]);
     }
-    all_deaths.push(total);
+    all_deaths.push(total1);
+    all_confirmed.push(total2);
+    all_resolved.push(total3);
+    all_active.push(total4);
 }
 
 function yep(data, date) {
